@@ -1,0 +1,26 @@
+name: Test and deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/src/main/**"
+      - "**/pom.xml"
+      - ".github/workflows/deployment.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build, test and deploy with Maven
+        run: |
+          SETTINGS=${GITHUB_WORKSPACE}/settings.xml
+          echo '${{ secrets.SETTINGS_XML }}' > $SETTINGS
+          mvn --settings $SETTINGS --batch-mode deploy
