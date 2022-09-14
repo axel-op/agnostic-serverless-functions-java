@@ -17,9 +17,11 @@ public class FunctionInvoker {
 
     private static final HttpRequestMapper requestMapper = new HttpRequestMapper();
     private static final HttpResponseMapper responseMapper = new HttpResponseMapper();
-    private static final Supplier<String> exceptionMessageSupplier = () -> "Implementation of "
+    private static final Supplier<String> implNotFoundMessageSupplier = () -> "Implementation of "
             + Handler.class.getName()
-            + " not found. Make sure that it is referenced as a service under META-INF/services.";
+            + " not found. Make sure that the handler implementation is referenced as a service provider under META-INF/services/"
+            + Handler.class.getName()
+            + ".";
 
     private Optional<Handler> optHandler = Optional.empty();
 
@@ -46,8 +48,8 @@ public class FunctionInvoker {
         optHandler = optHandler.or(this::lookupHandler);
         final Logger logger = context.getLogger();
         if (optHandler.isEmpty()) {
-            logger.severe(() -> "NO IMPLEMENTATION OF " + Handler.class.getName() + " FOUND. TERMINATING EXECUTION.");
-            throw new RuntimeException(exceptionMessageSupplier.get());
+            logger.severe(implNotFoundMessageSupplier);
+            throw new RuntimeException(implNotFoundMessageSupplier.get());
         }
         final Handler handler = optHandler.get();
         final HttpResponse handlerResponse = handler.handle(requestMapper.map(request), logger);
