@@ -12,13 +12,15 @@ public class FunctionInvoker implements HttpFunction {
     private static final HttpRequestMapper requestMapper = new HttpRequestMapper();
     private static final HttpResponseMapper responseMapper = new HttpResponseMapper();
     private static final Logger logger = Logger.getLogger(FunctionInvoker.class.getName());
-    private static final Optional<Handler> optHandler = lookupHandler();
+
+    private Optional<Handler> optHandler = Optional.empty();
 
     @Override
     public void service(
         com.google.cloud.functions.HttpRequest request,
         com.google.cloud.functions.HttpResponse response
     ) throws Exception {
+        optHandler = optHandler.or(this::lookupHandler);
         if (optHandler.isEmpty()) {
             logger.severe(() -> "NO IMPLEMENTATION OF " + Handler.class.getName()
                     + " FOUND. TERMINATING EXECUTION.");
@@ -30,7 +32,7 @@ public class FunctionInvoker implements HttpFunction {
         responseMapper.map(handlerResponse, response);
     }
 
-    private static Optional<Handler> lookupHandler() {
+    private Optional<Handler> lookupHandler() {
         try {
             return ServiceLoader.load(Handler.class).findFirst();
         } catch (ServiceConfigurationError e) {

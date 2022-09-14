@@ -17,10 +17,11 @@ public class FunctionInvoker {
 
     private static final HttpRequestMapper requestMapper = new HttpRequestMapper();
     private static final HttpResponseMapper responseMapper = new HttpResponseMapper();
-    private static final Optional<Handler> optHandler = lookupHandler();
     private static final Supplier<String> exceptionMessageSupplier = () -> "Implementation of "
             + Handler.class.getName()
             + " not found. Make sure that it is referenced as a service under META-INF/services.";
+
+    private Optional<Handler> optHandler = Optional.empty();
 
     @FunctionName("handler")
     public HttpResponseMessage run(
@@ -42,6 +43,7 @@ public class FunctionInvoker {
         HttpRequestMessage<Optional<String>> request,
         ExecutionContext context
     ) throws Exception {
+        optHandler = optHandler.or(this::lookupHandler);
         final Logger logger = context.getLogger();
         if (optHandler.isEmpty()) {
             logger.severe(() -> "NO IMPLEMENTATION OF " + Handler.class.getName() + " FOUND. TERMINATING EXECUTION.");
@@ -52,7 +54,7 @@ public class FunctionInvoker {
         return responseMapper.map(handlerResponse, request);
     }
 
-    private static Optional<Handler> lookupHandler() {
+    private Optional<Handler> lookupHandler() {
         return ServiceLoader.load(Handler.class).findFirst();
     }
     
