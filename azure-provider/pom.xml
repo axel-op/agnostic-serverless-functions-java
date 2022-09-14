@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    <name>Azure Functions Provider for Agnostic Serverless Functions</name>
+    <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+    <artifactId>agnostic-serverless-functions-azure-provider</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+        <artifactId>agnostic-serverless-functions-providers</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+            <artifactId>agnostic-serverless-functions-interfaces</artifactId>
+            <version>${agnostic.serverless.functions.interfaces.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft.azure.functions</groupId>
+            <artifactId>azure-functions-java-library</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+    </dependencies>
+</project>
