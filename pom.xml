@@ -2,15 +2,15 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <name>Java Providers for Agnostic Serverless Functions</name>
+    <name>Java Adapters for Agnostic Serverless Functions</name>
     <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-    <artifactId>agnostic-serverless-functions-providers</artifactId>
+    <artifactId>agnostic-serverless-functions-adapters</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <modules>
         <module>interfaces</module>
-        <module>gcloud-provider</module>
-        <module>azure-provider</module>
+        <module>gcloud-adapter</module>
+        <module>azure-adapter</module>
     </modules>
 
     <properties>

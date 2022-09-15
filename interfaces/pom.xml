@@ -9,7 +9,7 @@
 
     <parent>
         <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-        <artifactId>agnostic-serverless-functions-providers</artifactId>
+        <artifactId>agnostic-serverless-functions-adapters</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 </project>
