@@ -1,8 +1,8 @@
 # Agnostic Serverless Functions in Java
 
-Serverless functions are a great way to deploy backend services at a low cost. However, while the infrastructure is abstracted, the code has a strong dependency on the framework used. Once a provider is chosen, it's difficult to switch to another one without some refactoring.
+Serverless functions are a great way to deploy backend services at a low cost. However, while the infrastructure is abstracted, the code has a strong dependency on the framework used. When a serverless function has been developed targeting a specific FaaS provider, switching to another provider requires some refactoring.
 
-This project aims at reducing the dependency of serverless functions to the platform they run on. The same code can be compiled to a function deployable on any supported FaaS platform.
+This project aims at reducing the dependency of serverless functions to a specific framework. With this project, the same code can be compiled to a function deployable on any supported FaaS platform.
 
 ## Usage
 
@@ -10,8 +10,8 @@ This project aims at reducing the dependency of serverless functions to the plat
 
 You'll need to add two dependencies from [my Maven repository](https://github.com/axel-op/maven-packages):
 
-- the `interfaces` dependency contains the classes that will be used to code the agnostic function.
-- the `adapter` is the dependency that will add the classes needed to execute the function on the selected provider.
+- [`interfaces`](https://github.com/axel-op/maven-packages/packages/1617850) contains the classes that will be used to code the agnostic function.
+- `adapter` will add the classes needed to execute the function on the selected cloud provider.
 
 ```xml
 <!-- pom.xml -->
@@ -34,6 +34,7 @@ You'll need to add two dependencies from [my Maven repository](https://github.co
             <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
             <artifactId>agnostic-serverless-functions-${faas.provider}-adapter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -42,7 +43,7 @@ You'll need to add two dependencies from [my Maven repository](https://github.co
 
 ### Code
 
-The class containing the agnostic function must extend the `Handler` class. It must be [registered as a *service provider*](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html) so it can be loaded with a `ServiceLoader`. This means that there must be a resource file `META-INF/services/fr.axelop.agnosticserverlessfunctions.Handler` containing the fully qualified binary name of your handler class (in this example, it would be `com.example.MyHandler`). You can automate this process by using the [Google @AutoService](https://github.com/google/auto/tree/master/service) annotation.
+The class containing the agnostic function must implement the [`Handler`](./interfaces/src/main/java/fr/axelop/agnosticserverlessfunctions/Handler.java) interface. It must be [registered as a *service provider*](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html) so it can be loaded with a `ServiceLoader`. This means that there must be a resource file `META-INF/services/fr.axelop.agnosticserverlessfunctions.Handler` containing the fully qualified binary name of your handler class (in this example, it would be `com.example.MyHandler`). You can automate this process by using the [Google @AutoService](https://github.com/google/auto/tree/master/service) annotation.
 
 There can only be one handler in your JAR.
 
