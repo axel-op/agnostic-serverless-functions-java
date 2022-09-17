@@ -2,14 +2,14 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <name>Google Functions Adapter for Agnostic Serverless Functions</name>
+    <name>Google Cloud Functions Adapter for Agnostic Serverless Functions</name>
     <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
     <artifactId>agnostic-serverless-functions-gcloud-adapter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-        <artifactId>agnostic-serverless-functions-adapters</artifactId>
+        <artifactId>agnostic-serverless-functions</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
             <artifactId>agnostic-serverless-functions-interfaces</artifactId>
-            <version>${agnostic.serverless.functions.interfaces.version}</version>
+            <version>${agnosticserverlessfunctions.interfaces.version}</version>
         </dependency>
 
         <dependency>
