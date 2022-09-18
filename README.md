@@ -2,7 +2,9 @@
 
 Serverless functions are a great way to deploy backend services at a low cost. However, while the infrastructure is abstracted, the code has a strong dependency on the framework used. When a serverless function has been developed targeting a specific FaaS provider, switching to another provider requires some refactoring.
 
-This project aims at reducing the dependency of serverless functions to a specific framework. With this project, the same code can be compiled to a function deployable on any supported FaaS platform.
+This project aims at reducing the dependency of serverless functions to a specific framework. An *agnostic serverless function* is here defined as a serverless function that doesn't have a direct dependency (in its code or in its configuration) to the framework of a particular FaaS provider.
+
+With this project, the same code can be compiled to a function deployable on any supported FaaS platform.
 
 ## Usage
 
@@ -92,4 +94,4 @@ For now, this project can only deploy HTTP-triggered functions.
 
 ### Non-agnostic packaging and deployment
 
-While they can be entirely automated, the packaging and deployment steps differ between the cloud providers. A possible improvement is to script them so they can be triggered by a single command.
+While they can be entirely automated, the packaging and deployment steps differ between the cloud providers. A possible improvement is to script them so they can be triggered by a unique command.
