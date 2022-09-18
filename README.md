@@ -9,6 +9,10 @@ With this project, the same code can be compiled to a function deployable on any
 - Azure Functions
 - Google Cloud Functions
 
+## Example
+
+Check out [this template repository](https://github.com/axel-op/agnostic-serverless-functions-java-example) for a complete example of an agnostic serverless function in Java.
+
 ## Usage
 
 ### Configuration
