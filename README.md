@@ -4,7 +4,10 @@ Serverless functions are a great way to deploy backend services at a low cost. H
 
 This project aims at reducing the dependency of serverless functions to a specific framework. An *agnostic serverless function* is here defined as a serverless function that doesn't have a direct dependency (in its code or in its configuration) to the framework of a particular FaaS provider.
 
-With this project, the same code can be compiled to a function deployable on any supported FaaS platform.
+With this project, the same code can be compiled to a function deployable on any supported FaaS platform. Currently, this project supports the following providers (other providers will be added in the future):
+
+- Azure Functions
+- Google Cloud Functions
 
 ## Usage
 
