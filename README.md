@@ -87,6 +87,8 @@ These steps are specific to each FaaS provider:
 - [Azure Functions](./azure-adapter)
 - [Google Cloud Functions](./gcloud-adapter)
 
+If you're using GitHub Actions, use [`agnostic-serverless-functions-java-package-action`](https://github.com/axel-op/agnostic-serverless-functions-java-package-action) to package your function.
+
 ## Advantages
 
 - Scalability: the deployment of the same code on different providers can be completely automated.
