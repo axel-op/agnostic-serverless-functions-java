@@ -9,6 +9,7 @@
 
     <modules>
         <module>interfaces</module>
+        <module>handler-loader</module>
         <module>gcloud-adapter</module>
         <module>azure-adapter</module>
     </modules>
@@ -19,6 +20,7 @@
         <java.version>11</java.version>
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
         <maven.jar.plugin.version>3.2.2</maven.jar.plugin.version>
+        <maven.shade.plugin.version>3.4.0</maven.shade.plugin.version>
         <agnosticserverlessfunctions.interfaces.version>0.0.1-SNAPSHOT</agnosticserverlessfunctions.interfaces.version>
     </properties>
 

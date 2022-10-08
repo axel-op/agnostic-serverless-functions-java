@@ -1,8 +1,6 @@
 package fr.axelop.agnosticserverlessfunctions;
 
 import java.util.Optional;
-import java.util.ServiceLoader;
-import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import com.microsoft.azure.functions.ExecutionContext;
@@ -15,15 +13,8 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 public class FunctionInvoker {
 
-    private static final HttpRequestMapper requestMapper = new HttpRequestMapper();
-    private static final HttpResponseMapper responseMapper = new HttpResponseMapper();
-    private static final Supplier<String> implNotFoundMessageSupplier = () -> "Implementation of "
-            + Handler.class.getName()
-            + " not found. Make sure that the handler implementation is referenced as a service provider under META-INF/services/"
-            + Handler.class.getName()
-            + ".";
-
-    private Optional<Handler> optHandler = Optional.empty();
+    private static final HttpRequestMapper REQUEST_MAPPER = new HttpRequestMapper();
+    private static final HttpResponseMapper RESPONSE_MAPPER = new HttpResponseMapper();
 
     @FunctionName("handler")
     public HttpResponseMessage run(
@@ -45,19 +36,10 @@ public class FunctionInvoker {
         HttpRequestMessage<Optional<String>> request,
         ExecutionContext context
     ) throws Exception {
-        optHandler = optHandler.or(this::lookupHandler);
         final Logger logger = context.getLogger();
-        if (optHandler.isEmpty()) {
-            logger.severe(implNotFoundMessageSupplier);
-            throw new RuntimeException(implNotFoundMessageSupplier.get());
-        }
-        final Handler handler = optHandler.get();
-        final HttpResponse handlerResponse = handler.handle(requestMapper.map(request), logger);
-        return responseMapper.map(handlerResponse, request);
-    }
-
-    private Optional<Handler> lookupHandler() {
-        return ServiceLoader.load(Handler.class).findFirst();
+        final Handler handler = HandlerLoader.getInstance(logger).loadOrThrow();
+        final HttpResponse handlerResponse = handler.handle(REQUEST_MAPPER.map(request), logger);
+        return RESPONSE_MAPPER.map(handlerResponse, request);
     }
     
 }
