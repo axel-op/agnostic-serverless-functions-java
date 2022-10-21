@@ -13,6 +13,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <google.cloud.functions.framework.api.version>1.0.4</google.cloud.functions.framework.api.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
@@ -29,7 +33,7 @@
         <dependency>
             <groupId>com.google.cloud.functions</groupId>
             <artifactId>functions-framework-api</artifactId>
-            <version>1.0.4</version>
+            <version>${google.cloud.functions.framework.api.version}</version>
         </dependency>
     </dependencies>
 
