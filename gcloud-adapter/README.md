@@ -13,10 +13,16 @@ The [`maven-shade-plugin`](https://maven.apache.org/plugins/maven-shade-plugin) 
 ```bash
 mvn package shade:shade
 
+# This is the Maven "target" directory
+BUILD_DIR=$(mvn help:evaluate -Dexpression=project.build.directory -q -DforceStdout)
+
+# The Maven shade plugin adds the "original-" prefix to the non-shaded JAR.
+# Here we select the shaded JAR which does not have this prefix.
+JAR_FILE=$(ls ${BUILD_DIR} | grep '.jar$' | grep -v '^original')
+
 # the Uber JAR is copied into the deployment directory
-JAR_FILE=$(ls target | grep '.jar$' | grep -v '^original')
-mkdir -p target/${DEPLOYMENT_DIR}
-cp target/${JAR_FILE} target/${DEPLOYMENT_DIR}/${JAR_FILE}
+mkdir -p ${BUILD_DIR}/${DEPLOYMENT_DIR}
+cp ${BUILD_DIR}/${JAR_FILE} ${BUILD_DIR}/${DEPLOYMENT_DIR}/${JAR_FILE}
 ```
 
 ## Deployment
@@ -29,7 +35,7 @@ For example, [using the `gcloud` CLI](https://cloud.google.com/sdk/gcloud/refere
 gcloud functions deploy ${FUNCTION_NAME} \
     --region ${REGION} \
     --entry-point fr.axelop.agnosticserverlessfunctions.FunctionInvoker \
-    --source target/${DEPLOYMENT_DIR} \
+    --source ${BUILD_DIR}/${DEPLOYMENT_DIR} \
     --runtime java11 \
     --trigger-http \
     --gen2
