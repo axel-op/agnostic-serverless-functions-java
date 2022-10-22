@@ -115,9 +115,9 @@ buildNumber.properties
 .flattened-pom.xml
 
 ### VisualStudioCode ###
-.vscode/*
-!.vscode/tasks.json
-!.vscode/launch.json
+**/.vscode/*
+!**/.vscode/tasks.json
+!**/.vscode/launch.json
 *.code-workspace
 
 ### VisualStudioCode Patch ###
