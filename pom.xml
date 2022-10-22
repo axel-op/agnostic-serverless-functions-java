@@ -12,6 +12,7 @@
         <module>handler-loader</module>
         <module>gcloud-adapter</module>
         <module>azure-adapter</module>
+        <module>aws-adapter</module>
     </modules>
 
     <properties>

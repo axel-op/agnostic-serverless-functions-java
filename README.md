@@ -6,6 +6,7 @@ This project aims at reducing the dependency of serverless functions to a specif
 
 With this project, the same code can be compiled to a function deployable on any supported FaaS platform. Currently, this project supports the following providers (other providers will be added in the future):
 
+- AWS Lambda
 - Azure Functions
 - Google Cloud Functions
 
@@ -27,7 +28,7 @@ You'll need to add two dependencies from [my Maven repository](https://github.co
 <project>
 
     <properties>
-        <!-- Can be: azure, gcloud -->
+        <!-- Can be: aws, azure, gcloud -->
         <!-- This property can also be set by a command-line parameter -->
         <faas.provider>gcloud</faas.provider>
     </properties>
@@ -84,8 +85,9 @@ public class MyHandler implements Handler {
 
 These steps are specific to each FaaS provider:
 
-- [Azure Functions](./azure-adapter)
-- [Google Cloud Functions](./gcloud-adapter)
+- [AWS Lambda](./aws-adapter/README.md)
+- [Azure Functions](./azure-adapter/README.md)
+- [Google Cloud Functions](./gcloud-adapter/README.md)
 
 If you're using GitHub Actions, use [`agnostic-serverless-functions-java-package-action`](https://github.com/axel-op/agnostic-serverless-functions-java-package-action) to package your function.
 

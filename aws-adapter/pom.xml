@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    <name>AWS Lambda Adapter for Agnostic Serverless Functions</name>
+    <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+    <artifactId>agnostic-serverless-functions-aws-adapter</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+        <artifactId>agnostic-serverless-functions</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <aws.lambda.java.core.version>1.2.1</aws.lambda.java.core.version>
+        <aws.lambda.java.events.version>3.11.0</aws.lambda.java.events.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+            <artifactId>agnostic-serverless-functions-interfaces</artifactId>
+            <version>${agnosticserverlessfunctions.interfaces.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+            <artifactId>agnostic-serverless-functions-handler-loader</artifactId>
+            <version>${agnosticserverlessfunctions.interfaces.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
+            <version>${aws.lambda.java.core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-events</artifactId>
+            <version>${aws.lambda.java.events.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven.shade.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>fr.axelop.agnosticserverlessfunctions:agnostic-serverless-functions-handler-loader</include>
+                                    <include>com.amazonaws:aws-lambda-java-core</include>
+                                    <include>com.amazonaws:aws-lambda-java-events</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
