@@ -15,6 +15,7 @@ public class FunctionInvoker {
 
     private static final HttpRequestMapper REQUEST_MAPPER = new HttpRequestMapper();
     private static final HttpResponseMapper RESPONSE_MAPPER = new HttpResponseMapper();
+    private static final HandlerLoader HANDLER_LOADER = new HandlerLoader();
 
     @FunctionName("handler")
     public HttpResponseMessage run(
@@ -37,7 +38,8 @@ public class FunctionInvoker {
         ExecutionContext context
     ) throws Exception {
         final Logger logger = context.getLogger();
-        final Handler handler = new HandlerLoader(logger).loadOrThrow();
+        final LoggingRethrower rethrower = new LoggingRethrower(logger);
+        final Handler handler = rethrower.logAndRethrow(HANDLER_LOADER::loadOrThrow);
         final HttpResponse handlerResponse = handler.handle(REQUEST_MAPPER.map(request), logger);
         return RESPONSE_MAPPER.map(handlerResponse, request);
     }

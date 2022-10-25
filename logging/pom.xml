@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    <name>Logging for Agnostic Serverless Functions Adapters</name>
+    <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+    <artifactId>agnostic-serverless-functions-logging</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+        <artifactId>agnostic-serverless-functions</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+</project>

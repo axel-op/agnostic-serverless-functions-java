@@ -32,6 +32,12 @@
         </dependency>
 
         <dependency>
+            <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
+            <artifactId>agnostic-serverless-functions-logging</artifactId>
+            <version>${agnosticserverlessfunctions.logging.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-core</artifactId>
             <version>${aws.lambda.java.core.version}</version>
@@ -60,6 +66,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>fr.axelop.agnosticserverlessfunctions:agnostic-serverless-functions-handler-loader</include>
+                                    <include>fr.axelop.agnosticserverlessfunctions:agnostic-serverless-functions-logging</include>
                                     <include>com.amazonaws:aws-lambda-java-core</include>
                                     <include>com.amazonaws:aws-lambda-java-events</include>
                                 </includes>

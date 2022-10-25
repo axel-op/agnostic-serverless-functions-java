@@ -11,11 +11,13 @@ public class FunctionInvoker implements RequestHandler<APIGatewayV2HTTPEvent, AP
 
     private static final HttpRequestMapper REQUEST_MAPPER = new HttpRequestMapper();
     private static final HttpResponseMapper RESPONSE_MAPPER = new HttpResponseMapper();
+    private static final HandlerLoader HANDLER_LOADER = new HandlerLoader();
 
     public APIGatewayV2HTTPResponse handleRequest(APIGatewayV2HTTPEvent request, Context context) {
         final Logger logger = Logger.getAnonymousLogger();
         logger.addHandler(new LambdaLoggerHandler(context.getLogger()));
-        final Handler handler = new HandlerLoader(logger).loadOrThrow();
+        final LoggingRethrower rethrower = new LoggingRethrower(logger);
+        final Handler handler = rethrower.logAndRethrow(HANDLER_LOADER::loadOrThrow);
         final HttpResponse handlerResponse = handler.handle(REQUEST_MAPPER.map(request), logger);
         return RESPONSE_MAPPER.map(handlerResponse);
     }
