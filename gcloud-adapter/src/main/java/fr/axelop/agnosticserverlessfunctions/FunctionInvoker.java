@@ -9,7 +9,7 @@ public class FunctionInvoker implements HttpFunction {
     private static final HttpRequestMapper REQUEST_MAPPER = new HttpRequestMapper();
     private static final HttpResponseMapper RESPONSE_MAPPER = new HttpResponseMapper();
     private static final Logger LOGGER = Logger.getLogger(FunctionInvoker.class.getName());
-    private static final HandlerLoader HANDLER_LOADER = HandlerLoader.getInstance(LOGGER);
+    private static final HandlerLoader HANDLER_LOADER = new HandlerLoader(LOGGER);
 
     @Override
     public void service(

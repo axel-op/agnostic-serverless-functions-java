@@ -37,7 +37,7 @@ public class FunctionInvoker {
         ExecutionContext context
     ) throws Exception {
         final Logger logger = context.getLogger();
-        final Handler handler = HandlerLoader.getInstance(logger).loadOrThrow();
+        final Handler handler = new HandlerLoader(logger).loadOrThrow();
         final HttpResponse handlerResponse = handler.handle(REQUEST_MAPPER.map(request), logger);
         return RESPONSE_MAPPER.map(handlerResponse, request);
     }
