@@ -16,6 +16,38 @@ Check out [this template repository](https://github.com/axel-op/agnostic-serverl
 
 ## Usage
 
+<p align="center"><img src="./diagram.png" width=400></p>
+
+### Code
+
+The class containing the agnostic function must implement the [`Handler`](./interfaces/src/main/java/fr/axelop/agnosticserverlessfunctions/Handler.java) interface. It must be [registered as a *service provider*](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html) so it can be loaded with a `ServiceLoader`. This means that there must be a resource file `META-INF/services/fr.axelop.agnosticserverlessfunctions.Handler` containing the fully qualified binary name of your handler class (in this example, it would be `com.example.MyHandler`). You can automate this process by using the [Google @AutoService](https://github.com/google/auto/tree/master/service) annotation.
+
+There can only be one handler in your JAR.
+
+```java
+package com.example;
+
+import java.util.logging.Logger;
+
+import fr.axelop.agnosticserverlessfunctions.Handler;
+import fr.axelop.agnosticserverlessfunctions.HttpRequest;
+import fr.axelop.agnosticserverlessfunctions.HttpResponse;
+
+public class MyHandler implements Handler {
+
+    @Override
+    public HttpResponse handle(HttpRequest request, Logger logger) {
+        return HttpResponse.newBuilder()
+                .setStatusCode(200)
+                .setBody(request.getBody().isPresent()
+                        ? "The request body was: " + request.getBody().get()
+                        : "There was no body in this " + request.getMethod() + " request!")
+                .build();
+    }
+
+}
+```
+
 ### Configuration
 
 You'll need to add two dependencies from [my Maven repository](https://github.com/axel-op/maven-packages):
@@ -49,36 +81,6 @@ You'll need to add two dependencies from [my Maven repository](https://github.co
     </dependencies>
 
 </project>
-```
-
-### Code
-
-The class containing the agnostic function must implement the [`Handler`](./interfaces/src/main/java/fr/axelop/agnosticserverlessfunctions/Handler.java) interface. It must be [registered as a *service provider*](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html) so it can be loaded with a `ServiceLoader`. This means that there must be a resource file `META-INF/services/fr.axelop.agnosticserverlessfunctions.Handler` containing the fully qualified binary name of your handler class (in this example, it would be `com.example.MyHandler`). You can automate this process by using the [Google @AutoService](https://github.com/google/auto/tree/master/service) annotation.
-
-There can only be one handler in your JAR.
-
-```java
-package com.example;
-
-import java.util.logging.Logger;
-
-import fr.axelop.agnosticserverlessfunctions.Handler;
-import fr.axelop.agnosticserverlessfunctions.HttpRequest;
-import fr.axelop.agnosticserverlessfunctions.HttpResponse;
-
-public class MyHandler implements Handler {
-
-    @Override
-    public HttpResponse handle(HttpRequest request, Logger logger) {
-        return HttpResponse.newBuilder()
-                .setStatusCode(200)
-                .setBody(request.getBody().isPresent()
-                        ? "The request body was: " + request.getBody().get()
-                        : "There was no body in this " + request.getMethod() + " request!")
-                .build();
-    }
-
-}
 ```
 
 ### Packaging and deployment
