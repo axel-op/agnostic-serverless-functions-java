@@ -9,7 +9,6 @@ public class FunctionInvoker implements HttpFunction {
     private static final HttpRequestMapper REQUEST_MAPPER = new HttpRequestMapper();
     private static final HttpResponseMapper RESPONSE_MAPPER = new HttpResponseMapper();
     private static final Logger LOGGER = Logger.getLogger(FunctionInvoker.class.getName());
-    private static final LoggingRethrower RETHROWER = new LoggingRethrower(LOGGER);
     private static final HandlerLoader HANDLER_LOADER = new HandlerLoader();
 
     @Override
@@ -17,7 +16,7 @@ public class FunctionInvoker implements HttpFunction {
         com.google.cloud.functions.HttpRequest request,
         com.google.cloud.functions.HttpResponse response
     ) throws Exception {
-        final Handler handler = RETHROWER.logAndRethrow(HANDLER_LOADER::loadOrThrow);
+        final Handler handler = HANDLER_LOADER.loadOrThrow();
         final HttpResponse handlerResponse = handler.handle(REQUEST_MAPPER.map(request), LOGGER);
         RESPONSE_MAPPER.map(handlerResponse, response);
     }

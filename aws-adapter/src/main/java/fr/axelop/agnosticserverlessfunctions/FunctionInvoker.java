@@ -16,8 +16,7 @@ public class FunctionInvoker implements RequestHandler<APIGatewayV2HTTPEvent, AP
     public APIGatewayV2HTTPResponse handleRequest(APIGatewayV2HTTPEvent request, Context context) {
         final Logger logger = Logger.getAnonymousLogger();
         logger.addHandler(new LambdaLoggerHandler(context.getLogger()));
-        final LoggingRethrower rethrower = new LoggingRethrower(logger);
-        final Handler handler = rethrower.logAndRethrow(HANDLER_LOADER::loadOrThrow);
+        final Handler handler = HANDLER_LOADER.loadOrThrow();
         final HttpResponse handlerResponse = handler.handle(REQUEST_MAPPER.map(request), logger);
         return RESPONSE_MAPPER.map(handlerResponse);
     }

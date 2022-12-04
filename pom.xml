@@ -10,7 +10,6 @@
     <modules>
         <module>interfaces</module>
         <module>handler-loader</module>
-        <module>logging</module>
         <module>gcloud-adapter</module>
         <module>azure-adapter</module>
         <module>aws-adapter</module>
@@ -24,7 +23,6 @@
         <maven.jar.plugin.version>3.2.2</maven.jar.plugin.version>
         <maven.shade.plugin.version>3.4.0</maven.shade.plugin.version>
         <agnosticserverlessfunctions.interfaces.version>0.0.1-SNAPSHOT</agnosticserverlessfunctions.interfaces.version>
-        <agnosticserverlessfunctions.logging.version>0.0.1-SNAPSHOT</agnosticserverlessfunctions.logging.version>
     </properties>
 
     <url>${github.url}</url>

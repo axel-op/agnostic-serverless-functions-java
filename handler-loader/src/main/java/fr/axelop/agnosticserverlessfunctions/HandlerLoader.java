@@ -8,11 +8,7 @@ public class HandlerLoader {
     private static final Class<Handler> HANDLER_CLASS = Handler.class;
     
     public Handler loadOrThrow() throws HandlerNotFoundException {
-        final Optional<Handler> handler = load();
-        if (handler.isPresent()) {
-            return handler.get();
-        }
-        throw new HandlerNotFoundException();
+        return load().orElseThrow(HandlerNotFoundException::new);
     }
     
     public Optional<Handler> load() {

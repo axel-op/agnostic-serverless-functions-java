@@ -31,12 +31,6 @@
         </dependency>
 
         <dependency>
-            <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-            <artifactId>agnostic-serverless-functions-logging</artifactId>
-            <version>${agnosticserverlessfunctions.logging.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.google.cloud.functions</groupId>
             <artifactId>functions-framework-api</artifactId>
             <version>${google.cloud.functions.framework.api.version}</version>
@@ -59,7 +53,6 @@
                             <artifactSet>
                                 <includes>
                                     <include>fr.axelop.agnosticserverlessfunctions:agnostic-serverless-functions-handler-loader</include>
-                                    <include>fr.axelop.agnosticserverlessfunctions:agnostic-serverless-functions-logging</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
