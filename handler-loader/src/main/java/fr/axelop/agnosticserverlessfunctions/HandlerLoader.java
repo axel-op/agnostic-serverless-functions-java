@@ -6,13 +6,15 @@ import java.util.ServiceLoader;
 public class HandlerLoader {
 
     private static final Class<Handler> HANDLER_CLASS = Handler.class;
+    private static Optional<Handler> cached = Optional.empty();
     
     public Handler loadOrThrow() throws HandlerNotFoundException {
         return load().orElseThrow(HandlerNotFoundException::new);
     }
     
     public Optional<Handler> load() {
-        return ServiceLoader.load(HANDLER_CLASS).findFirst();
+        cached = cached.or(ServiceLoader.load(HANDLER_CLASS)::findFirst);
+        return cached;
     }
     
 }
