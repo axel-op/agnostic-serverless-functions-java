@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
 
@@ -42,8 +43,11 @@ class HttpRequestMapper {
     }
 
     private Map<String, List<String>> getHeaders(APIGatewayV2HTTPEvent request) {
-        final Map<String, List<String>> headers = new HashMap<>(request.getHeaders().size());
-        for (Map.Entry<String, String> e : request.getHeaders().entrySet()) {
+        final Map<String, List<String>> headers = new HashMap<>();
+        final Set<Map.Entry<String, String>> entrySet = Optional.ofNullable(request.getHeaders())
+                .orElse(Map.of())
+                .entrySet();
+        for (Map.Entry<String, String> e : entrySet) {
             headers
                     .computeIfAbsent(e.getKey(), k -> new ArrayList<>(1))
                     .add(e.getValue());
