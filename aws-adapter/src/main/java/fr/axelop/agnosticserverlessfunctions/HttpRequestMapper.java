@@ -9,11 +9,13 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent.RequestContext.Http;
 
 class HttpRequestMapper {
 
     public HttpRequest map(APIGatewayV2HTTPEvent request) {
         final Map<String, List<String>> headers = Collections.unmodifiableMap(getHeaders(request));
+        final Http httpRequestContext = request.getRequestContext().getHttp();
         return new HttpRequest() {
 
             @Override
@@ -36,7 +38,12 @@ class HttpRequestMapper {
 
             @Override
             public String getMethod() {
-                return request.getRequestContext().getHttp().getMethod();
+                return httpRequestContext.getMethod();
+            }
+
+            @Override
+            public String getPath() {
+                return httpRequestContext.getPath();
             }
 
         };

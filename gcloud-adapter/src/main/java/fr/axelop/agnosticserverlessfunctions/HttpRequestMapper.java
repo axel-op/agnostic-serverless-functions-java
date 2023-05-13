@@ -35,6 +35,11 @@ class HttpRequestMapper {
                 return gcloudRequest.getMethod();
             }
 
+            @Override
+            public String getPath() {
+                return gcloudRequest.getPath();
+            }
+
         };
     }
 

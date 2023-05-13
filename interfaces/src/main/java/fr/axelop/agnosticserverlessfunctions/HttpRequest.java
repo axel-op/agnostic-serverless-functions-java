@@ -6,4 +6,6 @@ public interface HttpRequest extends HttpMessage {
 
     long getContentLength();
 
+    String getPath();
+
 }

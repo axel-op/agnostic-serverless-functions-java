@@ -35,6 +35,11 @@ class HttpRequestMapper {
                 return azureRequest.getHttpMethod().toString();
             }
 
+            @Override
+            public String getPath() {
+                return azureRequest.getUri().getPath();
+            };
+
         };
     }
 
