@@ -14,7 +14,8 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent.Reques
 class HttpRequestMapper {
 
     public HttpRequest map(APIGatewayV2HTTPEvent request) {
-        final Map<String, List<String>> headers = Collections.unmodifiableMap(getHeaders(request));
+        final Map<String, List<String>> headers = Collections.unmodifiableMap(toListMultimap(request.getHeaders()));
+        final Map<String, List<String>> queryParams = Collections.unmodifiableMap(toListMultimap(request.getQueryStringParameters()));
         final Http httpRequestContext = request.getRequestContext().getHttp();
         return new HttpRequest() {
 
@@ -46,20 +47,25 @@ class HttpRequestMapper {
                 return httpRequestContext.getPath();
             }
 
+            @Override
+            public Map<String, List<String>> getQueryParameters() {
+                return queryParams;
+            }
+
         };
     }
 
-    private Map<String, List<String>> getHeaders(APIGatewayV2HTTPEvent request) {
-        final Map<String, List<String>> headers = new HashMap<>();
-        final Set<Map.Entry<String, String>> entrySet = Optional.ofNullable(request.getHeaders())
+    private <K, V> Map<K, List<V>> toListMultimap(Map<K, V> map) {
+        final Map<K, List<V>> multimap = new HashMap<>();
+        final Set<Map.Entry<K, V>> entrySet = Optional.ofNullable(map)
                 .orElse(Map.of())
                 .entrySet();
-        for (Map.Entry<String, String> e : entrySet) {
-            headers
-                    .computeIfAbsent(e.getKey(), k -> new ArrayList<>(1))
+        for (Map.Entry<K, V> e : entrySet) {
+            multimap
+                    .computeIfAbsent(e.getKey(), k -> new ArrayList<>())
                     .add(e.getValue());
         }
-        return headers;
+        return multimap;
     }
 
 }

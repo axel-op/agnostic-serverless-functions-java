@@ -40,6 +40,11 @@ class HttpRequestMapper {
                 return gcloudRequest.getPath();
             }
 
+            @Override
+            public Map<String, List<String>> getQueryParameters() {
+                return gcloudRequest.getQueryParameters();
+            }
+
         };
     }
 

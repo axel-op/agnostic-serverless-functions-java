@@ -6,13 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+import java.util.Set;
 import com.microsoft.azure.functions.HttpRequestMessage;
 
 class HttpRequestMapper {
 
     public HttpRequest map(HttpRequestMessage<Optional<String>> azureRequest) {
-        final Map<String, List<String>> headers = Collections.unmodifiableMap(getHeaders(azureRequest));
+        final Map<String, List<String>> headers = Collections.unmodifiableMap(toListMultimap(azureRequest.getHeaders()));
+        final Map<String, List<String>> queryParams = Collections.unmodifiableMap(toListMultimap(azureRequest.getQueryParameters()));
         return new HttpRequest() {
 
             @Override
@@ -40,17 +41,25 @@ class HttpRequestMapper {
                 return azureRequest.getUri().getPath();
             };
 
+            @Override
+            public Map<String, List<String>> getQueryParameters() {
+                return queryParams;
+            }
+
         };
     }
 
-    private Map<String, List<String>> getHeaders(HttpRequestMessage<Optional<String>> azureRequest) {
-        final Map<String, List<String>> headers = new HashMap<>(azureRequest.getHeaders().size());
-        for (Map.Entry<String, String> header : azureRequest.getHeaders().entrySet()) {
-            headers
-                    .computeIfAbsent(header.getKey(), k -> new ArrayList<>(1))
-                    .add(header.getValue());
+    private <K, V> Map<K, List<V>> toListMultimap(Map<K, V> map) {
+        final Map<K, List<V>> multimap = new HashMap<>();
+        final Set<Map.Entry<K, V>> entrySet = Optional.ofNullable(map)
+                .orElse(Map.of())
+                .entrySet();
+        for (Map.Entry<K, V> e : entrySet) {
+            multimap
+                    .computeIfAbsent(e.getKey(), k -> new ArrayList<>())
+                    .add(e.getValue());
         }
-        return headers;
+        return multimap;
     }
 
 }
