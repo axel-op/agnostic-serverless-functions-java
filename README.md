@@ -68,13 +68,13 @@ You'll need to add two dependencies from [my Maven repository](https://github.co
     <dependencies>
         <dependency>
             <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-            <artifactId>agnostic-serverless-functions-interfaces</artifactId>
+            <artifactId>interfaces</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-            <artifactId>agnostic-serverless-functions-${faas.provider}-adapter</artifactId>
+            <artifactId>${faas.provider}-adapter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>

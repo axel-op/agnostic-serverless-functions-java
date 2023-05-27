@@ -3,8 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <name>Google Cloud Functions Adapter for Agnostic Serverless Functions</name>
-    <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-    <artifactId>agnostic-serverless-functions-gcloud-adapter</artifactId>
+    <artifactId>gcloud-adapter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
@@ -20,13 +19,13 @@
     <dependencies>
         <dependency>
             <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-            <artifactId>agnostic-serverless-functions-interfaces</artifactId>
+            <artifactId>interfaces</artifactId>
             <version>${agnosticserverlessfunctions.interfaces.version}</version>
         </dependency>
 
         <dependency>
             <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-            <artifactId>agnostic-serverless-functions-handler-loader</artifactId>
+            <artifactId>handler-loader</artifactId>
             <version>${agnosticserverlessfunctions.interfaces.version}</version>
         </dependency>
 
@@ -52,7 +51,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>fr.axelop.agnosticserverlessfunctions:agnostic-serverless-functions-handler-loader</include>
+                                    <include>fr.axelop.agnosticserverlessfunctions:handler-loader</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

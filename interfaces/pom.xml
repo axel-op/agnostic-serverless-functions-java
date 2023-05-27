@@ -3,8 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <name>Agnostic Serverless Functions Interfaces</name>
-    <groupId>fr.axelop.agnosticserverlessfunctions</groupId>
-    <artifactId>agnostic-serverless-functions-interfaces</artifactId>
+    <artifactId>interfaces</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
